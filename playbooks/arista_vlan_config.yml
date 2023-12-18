@@ -1,0 +1,14 @@
+---
+- name: Configure VLANs
+  hosts: arista
+  gather_facts: false
+
+  tasks:
+    - name: Get the vlan details
+      arista.eos.eos_vlans:
+        state: gathered
+      register: vlan_config
+
+    - name: Print the details
+      ansible.builtin.debug:
+      msg: "{{ vlan_config }}
