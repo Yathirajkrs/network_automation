@@ -29,12 +29,6 @@
     - name: Create time stamp for play
       ansible.builtin.set_fact:
         datetime: "{{ lookup('pipe', 'date +%Y-%m-%d-%H-%M') }}"
-      delegate_to: backup-server
-      delegate_facts: true
-      run_once: true
-      
-    - name: Change file nale
-      ansible.builtin.set_fact:
         datetime: "{{ hostvars['backup-server'].datetime + '-cisco' }}"
       delegate_to: backup-server
       delegate_facts: true
