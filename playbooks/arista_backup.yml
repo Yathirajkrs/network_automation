@@ -1,6 +1,6 @@
 ---
 - name: Retrieve network configurations
-  hosts: cisco
+  hosts: arista
   gather_facts: false
 
   tasks:
