@@ -1,0 +1,71 @@
+---
+- name: SNMP ro/rw string and acl configurations
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+    - name: Get the snmp details
+      cisco.ios.command:
+        commands:
+          - sh run | sec snmp
+      register: snmp_data
+
+    - name: print snmp data pre config
+      ansible.builtin.debug:
+        msg: "{{ snmp_data }}"
+
+    - name: Get the acl config details
+      cisco.ios.command:
+        commands:
+          - sh run | sec access-list
+      register: acl_data
+
+    - name: print the acl data pre config
+      ansible.builtin.debug:
+        msg: "{{ acl_data }}"
+        
+    - name: Ensure that the desired snmp strings are removed
+      cisco.ios.ios_config:
+        commands:
+          - no snmp-server community ansible-public RO
+          - no snmp-server community ansible-private RW
+
+    - name: Get the snmp post config details
+      cisco.ios.command:
+        commands:
+          - sh run | sec snmp
+      register: snmp_data
+      
+    - name: print snmp data post config
+      ansible.builtin.debug:
+        msg: "{{ snmp_data }}"
+    
+    - name: remove acl
+      cisco.ios.ios_acls:
+        config:
+          - afi: ipv4
+            acls:
+              - name: 110
+                aces:
+                  - sequence: 10
+                    protocol_options:
+                      icmp:
+                        traceroute: true
+                    source:
+                      address: 192.168.1.0
+                      wildcard_bits: 255.255.255.0
+                    destination:
+                      any: true
+                    grant: permit
+        state: deleted
+      
+    - name: Get the acl post config details
+      cisco.ios.command:
+        commands:
+          - sh run | sec access-list
+      register: acl_data
+
+    - name: print the acl data pre config
+      ansible.builtin.debug:
+        msg: "{{ acl_data }}"
+      
