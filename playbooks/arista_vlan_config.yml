@@ -11,4 +11,4 @@
 
     - name: Print the details
       ansible.builtin.debug:
-      msg: "{{ vlan_config }}"
+        msg: "{{ vlan_config }}"
