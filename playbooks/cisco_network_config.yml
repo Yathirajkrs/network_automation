@@ -42,22 +42,22 @@
     
     - name: Configure acl
       cisco.ios.ios_acls:
-      config:
-        - afi: ipv4
-          acls:
-            - name: 110
-              aces:
-                - sequence: 10
-                  protocol_options:
-                    icmp:
-                      traceroute: true
-                  source:
-                    address: 192.168.1.0
-                    wildcard_bits: 255.255.255.0
-                  destination:
-                    any: true
-                  grant: permit
-      state: merged
+        config:
+          - afi: ipv4
+            acls:
+              - name: 110
+                aces:
+                  - sequence: 10
+                    protocol_options:
+                      icmp:
+                        traceroute: true
+                    source:
+                      address: 192.168.1.0
+                      wildcard_bits: 255.255.255.0
+                    destination:
+                      any: true
+                    grant: permit
+        state: merged
       
     - name: Get the acl post config details
       cisco.ios.command:
