@@ -5,7 +5,7 @@
 
   tasks:
     - name: Get the snmp details
-      cisco.ios.ios.command:
+      cisco.ios.command:
         commands:
           - sh run | sec snmp
       register: snmp_data
@@ -21,7 +21,7 @@
           - snmp-server community ansible-private RW
 
     - name: Get the snmp details
-      cisco.ios.ios.command:
+      cisco.ios.command:
         commands:
           - sh run | sec snmp
       register: snmp_data
