@@ -35,6 +35,6 @@
       ansible.builtin.debug:
         msg: "{{ vlan_config.gathered }}"
 
-    - name: Fail the playbook
-      fail:
-        msg: Testing the flow.
+   # - name: Fail the playbook
+   #   fail:
+    #    msg: Testing the flow.
